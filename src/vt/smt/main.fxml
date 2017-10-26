@@ -3,6 +3,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="vt.smt.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:controller="vt.smt.Controller"
+            xmlns:fx="http://javafx.com/fxml">
+    <center>
+
+    </center>
+</BorderPane>
