@@ -13,7 +13,6 @@ import java.util.function.Function;
 
 public class VectorField extends Pane implements VectorFieldConsumer {
     private Image texture;
-   // private List<ImageView> vectors = new LinkedList<>();
     private List<ImageView> vectors = new LinkedList<>();
     public VectorField(){
         super();
@@ -22,16 +21,14 @@ public class VectorField extends Pane implements VectorFieldConsumer {
 
     // f: x, y -> _a(x, y)
     public void setField(Function<Point2D,Point2D> u){
-//        float height =  (float)this.getHeight() / SIZE;
-//        float width  =  (float)this.getWidth () / SIZE;
-//        float h = 0, w = 0;
-//        for(int i = 0; i < SIZE; i++, h += height, w = 0f)
-//            for (int j = 0; j < SIZE; j++, w += width, h = 0f) {
-//                vectors[i][j].setTranslateY(h);
-//                vectors[i][j].setTranslateX(w);
-//            }
-
+        vectors.forEach(e->{
+            // -, т.к. в физике ось oY вверх, в графике - вниз
+            Point2D vector_pos = new Point2D(e.getTranslateX(),-e.getTranslateY()-texture.getHeight()/2);
+            // -, т.к. fx вращает по часовой
+            e.setRotate(-vector_pos.angle( u.apply(vector_pos) ));
+        });
     }
+
     public void resize(){
         vectors.forEach(e->this.getChildren().remove(e));
         vectors.clear();
@@ -52,6 +49,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
                 vector.setTranslateX(j_w);
                 vector.setTranslateY(i_h);
                 vectors.add(vector);
+
                 vector.setRotate(Math.random()*360);
                 j_w += w_step;
             }
