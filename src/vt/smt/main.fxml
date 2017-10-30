@@ -9,9 +9,8 @@
 <BorderPane fx:controller="vt.smt.Controller"
             xmlns:fx="http://javafx.com/fxml">
     <top>
-        <Label text="ехехЕЕ"/>
     </top>
     <center>
-        <VectorField></VectorField>
+        <VectorField onMouseClicked="#setField" fx:id="field"></VectorField>
     </center>
 </BorderPane>
