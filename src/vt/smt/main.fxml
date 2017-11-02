@@ -1,16 +1,22 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<!--<?import javafx.scene.Scene?>-->
+<!--<?import vt.smt.Render.*?>-->
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.Scene?>
+
 <?import vt.smt.Render.*?>
 
-<BorderPane fx:controller="vt.smt.Controller"
-            xmlns:fx="http://javafx.com/fxml">
+<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="Infinity" height="Infinity">
+<BorderPane>
     <top>
     </top>
     <center>
-        <VectorField onMouseClicked="#setField" fx:id="field"></VectorField>
+
+
+        <VectorField onMouseClicked="#onFieldClick" fx:id="field">
+            <Charge fx:id="renderedCharge">
+            </Charge>
+        </VectorField>
+
     </center>
 </BorderPane>
+</Scene>

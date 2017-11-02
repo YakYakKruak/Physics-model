@@ -16,14 +16,15 @@ public class VectorField extends Pane implements VectorFieldConsumer {
     private List<ImageView> vectors = new LinkedList<>();
     public VectorField(){
         super();
-        texture = new Image(getClass().getResourceAsStream("/res/arrow.png"));
+        texture = new Image(getClass().getResourceAsStream("/res/miniArrow.png"));
     }
 
     // f: x, y -> _a(x, y)
     public void setField(Function<Point2D,Point2D> u){
         vectors.forEach(e->{
             // -, т.к. в физике ось oY вверх, в графике - вниз
-            Point2D vector_pos = new Point2D(e.getTranslateX(),-e.getTranslateY()-texture.getHeight()/2);
+            Point2D vector_pos = new Point2D(e.getTranslateX()+texture.getWidth()/2
+                    ,+e.getTranslateY()+texture.getHeight()/2);
             // -, т.к. fx вращает по часовой
             e.setRotate(-vector_pos.angle( u.apply(vector_pos) ));
         });
@@ -50,7 +51,6 @@ public class VectorField extends Pane implements VectorFieldConsumer {
                 vector.setTranslateY(i_h);
                 vectors.add(vector);
 
-                vector.setRotate(Math.random()*360);
                 j_w += w_step;
             }
             i_h += h_step;
