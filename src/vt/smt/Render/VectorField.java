@@ -30,7 +30,14 @@ public class VectorField extends Pane implements VectorFieldConsumer {
         });
     }
 
-    public void resize(){
+    @Override
+    public void resize(double width, double height) {
+        super.resize(width, height);
+        System.out.println(width);
+        this.resize();
+    }
+
+    private void resize(){
         vectors.forEach(e->this.getChildren().remove(e));
         vectors.clear();
         double width  =  (float)this.getWidth ();

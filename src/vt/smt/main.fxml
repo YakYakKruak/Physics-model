@@ -5,7 +5,7 @@
 
 <?import vt.smt.Render.*?>
 
-<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="Infinity" height="Infinity">
+<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="100"  height="800">
 <BorderPane>
     <top>
     </top>
