@@ -18,11 +18,19 @@ public class Charge  extends Pane {
         setCharge(new vt.smt.Physics.Charge(1,new Point2D(0,0)));
 
     }
+
     public Charge(vt.smt.Physics.Charge charge){
         this();
         setCharge(charge);
+        loadImage(charge.getCharge() >= 0);
     }
 
+    private void loadImage(boolean positive_charge){
+        if(positive_charge)
+            rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
+        else
+            rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
+    }
     public vt.smt.Physics.Charge getCharge() {
         return e;
     }
