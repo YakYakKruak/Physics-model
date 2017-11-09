@@ -9,8 +9,6 @@ import vt.smt.Physics.VectorFieldCalculatorImpl;
 import vt.smt.Physics.Кондюк;
 import vt.smt.Render.VectorField;
 
-import java.util.function.Function;
-
 public class Controller {
     @FXML private VectorField field;
     @FXML private vt.smt.Render.Charge renderedCharge;
@@ -18,18 +16,17 @@ public class Controller {
     public void initialize(){
         calculator.setКондюк(new Кондюк(new Point2D(800,200),300,30,400,0));
         calculator.addCharge(new Charge(10E-9,new Point2D(0,0)));
-        field.setField(new Function<Point2D, Point2D>() {
-            @Override
-            public Point2D apply(Point2D point2D) {
-                return point2D;
-            }
-        });
+        field.setFieldByAngle(e->0.);
+
     }
     public void onFieldClick(MouseEvent click){
-            vt.smt.Physics.Charge newCharge = new Charge(1E-1,new Point2D(click.getSceneX(), click.getSceneY()));
+            vt.smt.Physics.Charge newCharge = new Charge(1E-1,
+                    new Point2D(click.getSceneX(), click.getSceneY()));
             renderedCharge.setCharge(newCharge);
             calculator.getCharges().set(0,newCharge);
 
-            field.setField(calculator.getField());
+           // field.setField(calculator.getField());
+            field.setFieldByAngle(calculator.getVectorAngleInPoint());
+
     }
 }

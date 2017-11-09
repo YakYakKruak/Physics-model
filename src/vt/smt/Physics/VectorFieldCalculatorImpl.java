@@ -17,6 +17,7 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
         charges = new ArrayList<>();
     }
     private final double PIXELS_IN_METR = 100_000;
+
     @Override
     public Function<Point2D, Point2D> getField() {
         final double epsilon_0 = 8.85E-12;
@@ -28,8 +29,9 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
                         (4*PI*epsilon_0);
                 y += c.getCharge()/pow((c.getPosition().getY() - point2D.getY())/PIXELS_IN_METR,2)/
                         (4*PI*epsilon_0);
-                x = x * signum(c.getPosition().getX() - point2D.getX());
-                y = y * signum(c.getPosition().getY() - point2D.getY());
+
+                x = c.getPosition().getX() - point2D.getX();
+                y = c.getPosition().getY() - point2D.getY();
             }
             if(point2D.getX() - conder.getPlateCenter().getX() < conder.getDistance() &&
                     conder.getPlateCenter().getX()<point2D.getX()
@@ -38,6 +40,17 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
             }
 
             return new Point2D(x,y);
+        };
+    }
+
+    @Override
+    public Function<Point2D, Double> getVectorAngleInPoint() {
+        Function<Point2D, Point2D > f = getField();
+        return new Function<Point2D, Double>() {
+            @Override
+            public Double apply(Point2D point2D) {
+                return f.apply(point2D).angle(point2D);
+            }
         };
     }
 
