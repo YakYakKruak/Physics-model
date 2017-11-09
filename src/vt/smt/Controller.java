@@ -14,7 +14,7 @@ public class Controller {
     @FXML private vt.smt.Render.Charge renderedCharge;
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
     public void initialize(){
-        calculator.setКондюк(new Кондюк(new Point2D(800,200),300,30,400,0));
+        calculator.setКондюк(new Кондюк(new Point2D(800,200),300,30,400,0.));
         calculator.addCharge(new Charge(10E-9,new Point2D(0,0)));
         field.setFieldByAngle(e->0.);
 

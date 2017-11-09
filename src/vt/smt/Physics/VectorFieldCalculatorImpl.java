@@ -1,7 +1,9 @@
 package vt.smt.Physics;
 
 import javafx.geometry.Point2D;
+import sun.misc.Unsafe;
 
+import java.lang.annotation.Native;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -11,7 +13,7 @@ import static java.lang.Math.*;
 public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
 
     private List<Charge> charges;
-    private Кондюк conder;
+    private Кондюк кондюк;
 
     public VectorFieldCalculatorImpl() {
         charges = new ArrayList<>();
@@ -22,35 +24,32 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
     public Function<Point2D, Point2D> getField() {
         final double epsilon_0 = 8.85E-12;
         return point2D -> {
-            double x= 0;
-            double y= 0;
-            for (Charge c : charges) {
-                x += c.getCharge()/pow((c.getPosition().getX() - point2D.getX())/PIXELS_IN_METR,2)/
-                        (4*PI*epsilon_0);
-                y += c.getCharge()/pow((c.getPosition().getY() - point2D.getY())/PIXELS_IN_METR,2)/
-                        (4*PI*epsilon_0);
-
-                x = c.getPosition().getX() - point2D.getX();
-                y = c.getPosition().getY() - point2D.getY();
+            Double x= 0.;
+            Double y= 0.;
+            for (Charge e : charges) {
+                Double delta_x =  point2D.getX() - e.getPosition().getX();
+                Double delta_y =  point2D.getY() - e.getPosition().getY();
+                Double r_2 = delta_x*delta_x + delta_y*delta_y;
+                x +=  delta_x*e.getCharge()/(4*PI*epsilon_0*r_2);
+                y +=  delta_y*e.getCharge()/(4*PI*epsilon_0*r_2);
             }
-            if(point2D.getX() - conder.getPlateCenter().getX() < conder.getDistance() &&
-                    conder.getPlateCenter().getX()<point2D.getX()
-                    && abs(point2D.getY() - conder.getPlateCenter().getY())<conder.getPlateLength()/2) {
-                x += conder.getCharge()/(conder.getPlateLength()*conder.getPlateWidth())/epsilon_0;
-            }
+//            if(point2D.getX() - кондюк.getPlateCenter().getX() < кондюк.getDistance() &&
+//                    кондюк.getPlateCenter().getX()<point2D.getX()
+//                    && abs(point2D.getY() - кондюк.getPlateCenter().getY())< кондюк.getPlateLength()/2) {
+//                x += кондюк.getCharge()/(кондюк.getPlateLength()* кондюк.getPlateWidth())/epsilon_0;
+//            }
 
             return new Point2D(x,y);
         };
     }
 
+    @Deprecated
     @Override
     public Function<Point2D, Double> getVectorAngleInPoint() {
         Function<Point2D, Point2D > f = getField();
-        return new Function<Point2D, Double>() {
-            @Override
-            public Double apply(Point2D point2D) {
-                return f.apply(point2D).angle(point2D);
-            }
+        return point2D -> {
+            Point2D p = f.apply(point2D);
+            return -signum(p.getY())*toDegrees(acos(p.dotProduct(1.,0)/(sqrt(p.getX()*p.getX() + p.getY()*p.getY()))));
         };
     }
 
@@ -65,6 +64,6 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
 
     @Override
     public void setКондюк(Кондюк c) {
-        this.conder = c;
+        this.кондюк = c;
     }
 }
