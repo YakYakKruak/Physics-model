@@ -32,17 +32,20 @@ public class VectorField extends Pane implements VectorFieldConsumer {
 
     @Override
     public void setFieldByAngle(Function<Point2D, Double> f_angle) {
+        if(vectors.size() > 15)vectors.get(15).setRotate(90.);
         vectors.forEach(e->{
             Point2D vector_pos = new Point2D(e.getTranslateX()+texture.getWidth()/2.
                     ,+e.getTranslateY()+texture.getHeight()/2.);
             e.setRotate(-f_angle.apply(vector_pos));
+            e.setRotate(Math.random()*90.);
+
+            System.out.println(e.getRotate());
         });
     }
 
     @Override
     public void resize(double width, double height) {
         super.resize(width, height);
-        System.out.println(width);
         this.resize();
     }
 
@@ -66,7 +69,6 @@ public class VectorField extends Pane implements VectorFieldConsumer {
                 vector.setTranslateX(j_w);
                 vector.setTranslateY(i_h);
                 vectors.add(vector);
-
                 j_w += w_step;
             }
             i_h += h_step;
