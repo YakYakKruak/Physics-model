@@ -10,6 +10,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="800" height="800">
 <BorderPane style="-fx-background-color: black;">
     <top>
@@ -17,15 +22,27 @@
     <center>
         <VectorField onMouseClicked="#onFieldClick" fx:id="field"/>
     </center>
-    <BorderPane.margin>
-        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-    </BorderPane.margin>
-    <right>
-        <VBox alignment="CENTER" style="-fx-border-radius: 10px ; -fx-background-color: blueviolet; -fx-min-width: 100px; -fx-max-height: 200px;">
-            <Label>Установить заряд системы:</Label>
-            <Label>Hello</Label>
-            <Label>Hello</Label>
-            <Label>Hello</Label>
+<right>
+        <VBox alignment="CENTER"  style=" -fx-padding: 10px; -fx-spacing:10px ;-fx-border-color:white; -fx-border-radius: 10px ; -fx-background-color: black; -fx-min-width: 100px; -fx-max-height: 200px;">
+            <Label style="-fx-text-fill: white;">Установить заряд системы:</Label>
+            <HBox spacing="5">
+                <TextField style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: black; -fx-border-color: white; -fx-border-radius: 2px"  />
+                <ComboBox style="-fx-max-width: 50px; -fx-text-fill: white; -fx-background-color: black; -fx-border-color: white; -fx-border-radius: 2px">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="пКл" />
+                            <String fx:value="нКл" />
+                            <String fx:value="мкКл" />
+                            <String fx:value="мКл" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+            <Label style="-fx-text-fill: white;">Установить ширину пластин:</Label>
+            <HBox style="-fx-spacing: 10px">
+                <TextField style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: black; -fx-border-color: white; -fx-border-radius: 2px"  />
+                <Label style="-fx-text-fill: white;"> см </Label>
+            </HBox>
         </VBox>
     </right>
 </BorderPane>
