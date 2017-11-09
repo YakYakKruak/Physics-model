@@ -13,7 +13,7 @@ public class Charge  extends Pane {
     private ImageView rendered;
 
     public Charge(){
-        rendered = new ImageView(new Image(getClass().getResourceAsStream("/res/minusE.png")));
+        rendered = new ImageView();
         this.getChildren().add(rendered);
         setCharge(new vt.smt.Physics.Charge(1,new Point2D(0,0)));
 
@@ -24,7 +24,7 @@ public class Charge  extends Pane {
             rendered.setTranslateY(event.getY());
             e.setPosition(new Point2D(event.getX(),event.getY()));
 
-            onDragEnded.run();
+            whileDragging.run();
         });
 
 
@@ -37,11 +37,11 @@ public class Charge  extends Pane {
     }
 
     private void loadImage(boolean positive_charge){
-        if(positive_charge)
-            rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
+        if (positive_charge)
+            rendered.setImage(new Image(getClass().getResourceAsStream("/res/plusE.png")));
         else
-            rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
-    }
+          rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
+   }
     public vt.smt.Physics.Charge getCharge() {
         return e;
     }
@@ -54,11 +54,12 @@ public class Charge  extends Pane {
         this.e = e;
         rendered.setTranslateX( e.getPosition().getX());
         rendered.setTranslateY( e.getPosition().getY());
+        loadImage(e.getCharge() >= 0);
     }
-    private Runnable onDragEnded;
+    private Runnable whileDragging;
 
-    public void setOnDragEnded(Runnable callback){
-        this.onDragEnded = callback;
+    public void setWhileDragging(Runnable callback){
+        this.whileDragging = callback;
     }
 
 }

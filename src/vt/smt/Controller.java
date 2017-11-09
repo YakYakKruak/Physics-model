@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Controller {
     @FXML private VectorField field;
-    @FXML private vt.smt.Render.Charge prototype_positive;
+    @FXML private vt.smt.Render.Charge prototype_positive; // Заряды-меню внизу
     @FXML private vt.smt.Render.Charge prototype_negative;
 
     private ContextMenu contextMenu;
@@ -28,16 +28,25 @@ public class Controller {
     public void initialize(){
         calculator.setКондюк(new Кондюк(new Point2D(800,200),300,30,400,0.));
         initContextMenu();
-        init_prototypes();
+       init_prototypes();
 
     }
     private void init_prototypes(){
-        prototype_negative = new vt.smt.Render.Charge(
-                new vt.smt.Physics.Charge(10,new Point2D(0,0)) );
-        prototype_positive = new vt.smt.Render.Charge(
-                new vt.smt.Physics.Charge(-10,new Point2D(0,0)) );
+        Platform.runLater(()->{
+            prototype_negative.setCharge( new vt.smt.Physics.Charge(-10,new Point2D(0,0)));
+            prototype_positive.setCharge( new vt.smt.Physics.Charge(10,new Point2D(0,0)) );
+            Runnable on_drag_done = ()->{
+                System.out.println("back");
+            };
+            prototype_positive.setOnDragDone(e->on_drag_done.run());
+            prototype_positive.setWhileDragging(()->{
+            });
+        });
 
     }
+    private Point2D inital_prototype_1_pos; // Изначальные положения зарядов - меню внизу
+    private Point2D inital_prototype_2_pos;
+
     private Point2D lastClick; // to set the charge after the click to a proper position
 
     private void initContextMenu(){
@@ -53,7 +62,7 @@ public class Controller {
                 if(t1.x++ % 2 == 0)
                     new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
                 vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
-                newCharge.setOnDragEnded(()->Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint())));
+                newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint())));
                 charges.add(newCharge);
                 calculator.addCharge(new_phys_charge);
                 field.getChildren().add(charges.get(charges.size()-1));
