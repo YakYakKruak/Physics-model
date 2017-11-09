@@ -16,7 +16,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
     private List<ImageView> vectors = new LinkedList<>();
     public VectorField(){
         super();
-        texture = new Image(getClass().getResourceAsStream("/res/arrow.png"));
+        texture = new Image(getClass().getResourceAsStream("/res/coolArrow.png"));
     }
 
     // f: x, y -> _a(x, y)
