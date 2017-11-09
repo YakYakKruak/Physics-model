@@ -46,6 +46,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
     public void resize(double width, double height) {
         super.resize(width, height);
         this.resize();
+
     }
 
     private void resize(){
@@ -54,8 +55,8 @@ public class VectorField extends Pane implements VectorFieldConsumer {
         double width  =  (float)this.getWidth ();
         double height =  (float)this.getHeight();
 
-        double w_step = texture.getWidth()  + 5;
-        double h_step = w_step;
+        double w_step = texture.getWidth()  + 25;
+        double h_step = texture.getHeight()+ 7;
 
         double i_h = 0.;
         double j_w = 0.;
@@ -65,6 +66,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
             while(j_w < width){
                 ImageView vector = new ImageView(texture);
                 this.getChildren().add(vector);
+                vector.toBack();
                 vector.setTranslateX(j_w);
                 vector.setTranslateY(i_h);
                 vectors.add(vector);

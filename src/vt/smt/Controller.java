@@ -29,10 +29,21 @@ public class Controller {
     }
     private Point2D lastClick; // to set the charge after the click to a proper position
     private void initContextMenu(){;
+        class Костыль{
+            public int x;
+        }
+        Костыль t1 = new Костыль();
+        
         add.setOnAction(e->{
             Platform.runLater(()->{
-                charges.add(new vt.smt.Render.Charge(new Charge(1E-10,lastClick)));
-                calculator.addCharge(new Charge(1E-10,lastClick));
+                vt.smt.Physics.Charge new_phys_charge;
+                new_phys_charge = new Charge(1E-8,lastClick);
+                if(t1.x++ % 2 == 0)
+                    new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
+                vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
+                newCharge.setOnDragEnded(()->Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint())));
+                charges.add(newCharge);
+                calculator.addCharge(new_phys_charge);
                 field.getChildren().add(charges.get(charges.size()-1));
                 Platform.runLater(()->{field.setFieldByAngle(calculator.getVectorAngleInPoint());});
             });

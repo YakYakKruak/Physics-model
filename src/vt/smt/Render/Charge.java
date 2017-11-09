@@ -1,9 +1,14 @@
 package vt.smt.Render;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+
+import javax.security.auth.callback.Callback;
+import java.util.function.Consumer;
 
 /**
  * Created by semitro on 03.11.17.
@@ -16,6 +21,17 @@ public class Charge  extends Pane {
         rendered = new ImageView(new Image(getClass().getResourceAsStream("/res/minusE.png")));
         this.getChildren().add(rendered);
         setCharge(new vt.smt.Physics.Charge(1,new Point2D(0,0)));
+
+        rendered.setLayoutX(-rendered.getBoundsInLocal().getWidth()/2.);
+        rendered.setLayoutY(-rendered.getBoundsInLocal().getHeight()/2.);
+        this.setOnMouseDragged(event -> {
+            rendered.setTranslateX(event.getX());
+            rendered.setTranslateY(event.getY());
+            e.setPosition(new Point2D(event.getX(),event.getY()));
+
+            onDragEnded.run();
+        });
+
 
     }
     public Charge(vt.smt.Physics.Charge charge){
@@ -36,4 +52,10 @@ public class Charge  extends Pane {
         rendered.setTranslateX( e.getPosition().getX());
         rendered.setTranslateY( e.getPosition().getY());
     }
+    private Runnable onDragEnded;
+
+    public void setOnDragEnded(Runnable callback){
+        this.onDragEnded = callback;
+    }
+
 }
