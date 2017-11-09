@@ -4,7 +4,7 @@
 <?import javafx.scene.Scene?>
 <?import vt.smt.Render.*?>
 
-<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="800"  height="800">
+<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="100"  height="800">
 <BorderPane style="-fx-background-color: blueviolet;">
     <top>
     </top>
