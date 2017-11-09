@@ -16,7 +16,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
     private List<ImageView> vectors = new LinkedList<>();
     public VectorField(){
         super();
-        texture = new Image(getClass().getResourceAsStream("/res/miniArrow.png"));
+        texture = new Image(getClass().getResourceAsStream("/res/arrow.png"));
     }
 
     // f: x, y -> _a(x, y)
@@ -36,7 +36,6 @@ public class VectorField extends Pane implements VectorFieldConsumer {
             Point2D vector_pos = new Point2D(e.getTranslateX()+texture.getWidth()/2.
                     ,+e.getTranslateY()+texture.getHeight()/2.);
             e.setRotate(-f_angle.apply(vector_pos));
-            System.out.println(e.getRotate());
         });
     }
 

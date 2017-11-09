@@ -5,16 +5,16 @@
 
 <?import vt.smt.Render.*?>
 
-<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="100"  height="800">
-<BorderPane>
+<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="800"  height="800">
+<BorderPane style="-fx-background-color: blueviolet;">
     <top>
     </top>
     <center>
 
 
         <VectorField onMouseClicked="#onFieldClick" fx:id="field">
-            <Charge fx:id="renderedCharge">
-            </Charge>
+            <Charge fx:id="renderedCharge"/>
+            <Charge  fx:id="renderedCharge2"/>
         </VectorField>
 
     </center>
