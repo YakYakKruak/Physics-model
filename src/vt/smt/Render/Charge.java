@@ -5,9 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-/**
- * Created by semitro on 03.11.17.
- */
+
 public class Charge  extends Pane {
     private vt.smt.Physics.Charge e;
     private ImageView rendered;
@@ -23,8 +21,8 @@ public class Charge  extends Pane {
             rendered.setTranslateX(event.getX());
             rendered.setTranslateY(event.getY());
             e.setPosition(new Point2D(event.getX(),event.getY()));
-
-            whileDragging.run();
+            if(whileDragging != null)
+                whileDragging.run();
         });
 
 
