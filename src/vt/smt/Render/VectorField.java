@@ -16,7 +16,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
     private List<ImageView> vectors = new LinkedList<>();
     public VectorField(){
         super();
-        texture = new Image(getClass().getResourceAsStream("/res/coolArrow.png"));
+        texture = new Image(getClass().getResourceAsStream("/res/miniArrow.png"));
     }
 
     // f: x, y -> _a(x, y)
@@ -55,8 +55,8 @@ public class VectorField extends Pane implements VectorFieldConsumer {
         double width  =  (float)this.getWidth ();
         double height =  (float)this.getHeight();
 
-        double w_step = texture.getWidth()  + 25;
-        double h_step = texture.getHeight()+ 7;
+        double w_step = texture.getWidth()  + 12;
+        double h_step = texture.getHeight()+ 5;
 
         double i_h = 0.;
         double j_w = 0.;
