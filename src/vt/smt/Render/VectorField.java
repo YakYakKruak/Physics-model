@@ -14,6 +14,8 @@ import java.util.function.Function;
 public class VectorField extends Pane implements VectorFieldConsumer {
     private Image texture;
     private List<ImageView> vectors = new LinkedList<>();
+    private Function<Point2D, Point2D> last_u = null;
+
     public VectorField(){
         super();
         texture = new Image(getClass().getResourceAsStream("/res/miniArrow.png"));
@@ -21,6 +23,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
 
     // f: x, y -> _a(x, y)
     public void setField(Function<Point2D,Point2D> u){
+        last_u = u;
         vectors.forEach(e->{
             // -, т.к. в физике ось oY вверх, в графике - вниз
             Point2D vector_pos = new Point2D(e.getTranslateX()+texture.getWidth()/2
@@ -71,5 +74,8 @@ public class VectorField extends Pane implements VectorFieldConsumer {
             }
             i_h += h_step;
         }
+        if(last_u != null)
+            setField(last_u);
     }
+
 }

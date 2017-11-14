@@ -17,10 +17,12 @@ public class Charge  extends Pane {
 
         rendered.setLayoutX(-rendered.getBoundsInLocal().getWidth()/2.);
         rendered.setLayoutY(-rendered.getBoundsInLocal().getHeight()/2.);
+
         this.setOnMouseDragged(event -> {
             rendered.setTranslateX(event.getX());
             rendered.setTranslateY(event.getY());
             e.setPosition(new Point2D(event.getX(),event.getY()));
+
             if(whileDragging != null)
                 whileDragging.run();
         });
@@ -44,10 +46,6 @@ public class Charge  extends Pane {
         return e;
     }
 
-    public void setPosition(Point2D position){
-        e.setPosition(position);
-        setCharge(e);
-    }
     public void setCharge(vt.smt.Physics.Charge e) {
         this.e = e;
         rendered.setTranslateX( e.getPosition().getX());
