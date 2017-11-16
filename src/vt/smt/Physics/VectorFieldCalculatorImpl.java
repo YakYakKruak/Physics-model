@@ -33,11 +33,19 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
                 x +=  delta_x*e.getCharge()/(4*PI*epsilon_0*r_2);
                 y +=  delta_y*e.getCharge()/(4*PI*epsilon_0*r_2);
             }
-//            if(point2D.getX() - кондюк.getPlateCenter().getX() < кондюк.getDistance() &&
-//                    кондюк.getPlateCenter().getX()<point2D.getX()
-//                    && abs(point2D.getY() - кондюк.getPlateCenter().getY())< кондюк.getPlateLength()/2) {
-//                x += кондюк.getCharge()/(кондюк.getPlateLength()* кондюк.getPlateWidth())/epsilon_0;
-//            }
+
+            for (int i = 0; i < 100; i++) {
+                Double delta_x =  point2D.getX() - кондюк.getPlateCenter().getX();
+                Double delta_y =  point2D.getY() - кондюк.getPlateCenter().getY() - (50-i)*кондюк.getPlateLength()/100;
+                Double r_2 = delta_x*delta_x + delta_y*delta_y;
+                x +=  delta_x*кондюк.getCharge()/(400*PI*epsilon_0*r_2);
+                y +=  delta_y*кондюк.getCharge()/(400*PI*epsilon_0*r_2);
+                delta_x =  point2D.getX() - кондюк.getPlateCenter().getX() - кондюк.getDistance();
+                delta_y =  point2D.getY() - кондюк.getPlateCenter().getY() - (50-i)*кондюк.getPlateLength()/100;
+                r_2 = delta_x*delta_x + delta_y*delta_y;
+                x -=  delta_x*кондюк.getCharge()/(400*PI*epsilon_0*r_2);
+                y -=  delta_y*кондюк.getCharge()/(400*PI*epsilon_0*r_2);
+            }
 
             return new Point2D(x,y);
         };
