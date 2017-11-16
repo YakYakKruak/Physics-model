@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import vt.smt.Physics.Charge;
 import vt.smt.Physics.VectorFieldCalculator;
 import vt.smt.Physics.VectorFieldCalculatorImpl;
@@ -18,35 +21,44 @@ import java.util.List;
 
 public class Controller {
     @FXML private VectorField field;
-    @FXML private vt.smt.Render.Charge prototype_positive; // Заряды-меню внизу
-    @FXML private vt.smt.Render.Charge prototype_negative;
+    @FXML private Rectangle plast1;
+    @FXML private Rectangle plast2;
 
+    @FXML private TextField inputPower;
+    @FXML private TextField inputDistance;
+    @FXML private TextField inputWidth;
+    @FXML private TextField inputLenght;
+
+    private Кондюк conduc;
     private ContextMenu contextMenu;
     private List<vt.smt.Render.Charge> charges = new LinkedList<>();
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
     private MenuItem  add = new MenuItem("Добавить заряд");
+
     public void initialize(){
-        calculator.setКондюк(new Кондюк(new Point2D(200,400),300,30,600,10E-4));
+
+        conduc = new Кондюк(new Point2D(200,400),300,30,600,10E-4);
+
+        calculator.setКондюк(conduc);
         initContextMenu();
-       init_prototypes();
-       field.setFieldByAngle(calculator.getVectorAngleInPoint());
+        field.setFieldByAngle(calculator.getVectorAngleInPoint());
 
+//        inputDistance.setOnKeyPressed(e->conduc.setDistance());
     }
-    private void init_prototypes(){
-        Platform.runLater(()->{
-            prototype_negative.setCharge( new vt.smt.Physics.Charge(-10,new Point2D(0,0)));
-            prototype_positive.setCharge( new vt.smt.Physics.Charge(10,new Point2D(0,0)) );
-            Runnable on_drag_done = ()->{
-                System.out.println("back");
-            };
-            prototype_positive.setOnDragDone(e->on_drag_done.run());
-            prototype_positive.setWhileDragging(()->{
-            });
-        });
 
+    private void redraw_plasts(){
+        plast1.setTranslateX(conduc.getPlateCenter().getX() - 12);
+        plast1.setTranslateY(conduc.getPlateCenter().getY() - conduc.getPlateLength()/2);
+        plast1.setWidth(5);
+        plast1.setHeight(conduc.getPlateLength());
+        plast1.setFill(Color.BLACK);
+
+        plast2.setTranslateX(plast1.getTranslateX() + conduc.getDistance() + 12);
+        plast2.setTranslateY(plast1.getTranslateY());
+        plast2.setWidth(plast1.getWidth());
+        plast2.setHeight(plast1.getHeight());
+        field.setFieldByAngle(calculator.getVectorAngleInPoint());
     }
-    private Point2D inital_prototype_1_pos; // Изначальные положения зарядов - меню внизу
-    private Point2D inital_prototype_2_pos;
 
     private Point2D lastClick; // to set the charge after the click to a proper position
 
@@ -59,7 +71,7 @@ public class Controller {
         add.setOnAction(e->{
             Platform.runLater(()->{
                 vt.smt.Physics.Charge new_phys_charge;
-                new_phys_charge = new Charge(0,lastClick);
+                new_phys_charge = new Charge(1E-4,lastClick);
                 if(t1.x++ % 2 == 0)
                     new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
                 vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
@@ -80,5 +92,6 @@ public class Controller {
         if(click.getButton().equals(MouseButton.SECONDARY))
             contextMenu.show(field,click.getScreenX(),click.getScreenY());
     }
+
 
 }
