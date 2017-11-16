@@ -12,6 +12,7 @@ import vt.smt.Physics.Charge;
 import vt.smt.Physics.VectorFieldCalculator;
 import vt.smt.Physics.VectorFieldCalculatorImpl;
 import vt.smt.Physics.Кондюк;
+import vt.smt.Render.Fleck;
 import vt.smt.Render.VectorField;
 
 import java.util.LinkedList;
@@ -19,18 +20,13 @@ import java.util.List;
 
 public class Controller {
     @FXML private VectorField field;
-    @FXML private vt.smt.Render.Charge prototype_positive; // Заряды-меню внизу
-    @FXML private vt.smt.Render.Charge prototype_negative;
-    private vt.smt.Physics.Charge      charge_positive_prototype; // Физический
-    private vt.smt.Physics.Charge      charge_negaitive_prototype;
-
+    @FXML private Fleck prototype_positive; // Заряды-меню внизу
+    @FXML private Fleck prototype_negative;
 
     private ContextMenu contextMenu;
-    private List<vt.smt.Render.Charge> charges = new LinkedList<>();
+    private List<Fleck> flecks = new LinkedList<>();
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
     private MenuItem  add = new MenuItem("Добавить заряд");
-
-
 
     public void initialize(){
         calculator.setКондюк(new Кондюк(new Point2D(800,200),300,30,400,0.));
@@ -40,25 +36,24 @@ public class Controller {
     }
     private void init_prototypes(){
         Platform.runLater(()->{
-            charge_negaitive_prototype =  new vt.smt.Physics.Charge(-10,new Point2D(0,0));
-            charge_positive_prototype  =  new vt.smt.Physics.Charge(10,new Point2D(0,0));
-            prototype_negative.setCharge( charge_negaitive_prototype);
-            prototype_positive.setCharge( charge_positive_prototype);
+
+            prototype_negative.setPower(-1.);
+            prototype_positive.setPower( 1.);
             inital_prototype_1_pos = new Point2D(prototype_negative.getTranslateX(), prototype_negative.getTranslateY());
             inital_prototype_2_pos = new Point2D(prototype_positive.getTranslateX(), prototype_positive.getTranslateY());
 
             EventHandler<MouseEvent> on_drag_done = m-> {
               if(field.getHeight() - m.getSceneY() > 0 ) {
 
-                  double chrg = ((vt.smt.Render.Charge)m.getSource()).getCharge().getCharge();
-                  add_new_charge(new vt.smt.Physics.Charge(chrg, new Point2D(m.getSceneX(), m.getSceneY())));
-
-
+                  double power = ((Fleck)m.getSource()).getPower();
+                 //
+                  // add_new_charge(new Charge(power, new Point2D(m.getSceneX(), m.getSceneY())));
+                    add_new_charge(new Charge(10, new Point2D(2,200)));
               }
             };
             prototype_positive.setOnMouseReleased(on_drag_done);
             prototype_negative.setOnMouseReleased(on_drag_done);
-//
+
         });
 
     }
@@ -67,18 +62,15 @@ public class Controller {
 
     private Point2D lastClick; // to set the charge after the click to a proper position
 
-    private void add_new_charge(vt.smt.Render.Charge render_charge){
-        vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(render_charge.getCharge());
-        charges.add(newCharge);
-        calculator.addCharge(newCharge.getCharge());
-        field.getChildren().add(render_charge);
-        newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint())));
 
+    private void add_new_charge(Charge phys_charge){
+        Fleck newFleck = new Fleck(phys_charge);
+        flecks.add(newFleck);
+        calculator.addCharge(phys_charge);
+        field.getChildren().add(newFleck);
+
+        newFleck.setWhileDragging(()->Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint())));
         Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint()));
-    }
-    private void add_new_charge(vt.smt.Physics.Charge phys_charge){
-        vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(phys_charge);
-        add_new_charge(newCharge);
     }
     private void initContextMenu(){
         class Костыль{
@@ -89,17 +81,17 @@ public class Controller {
         add.setOnAction(e->{
             Platform.runLater(()->{
                 add_new_charge(new Charge(1E+8,lastClick));
-//                vt.smt.Physics.Charge new_phys_charge;
-//                new_phys_charge = new Charge(1E+8,lastClick);
+//                vt.smt.Physics.Fleck new_phys_charge;
+//                new_phys_charge = new Fleck(1E+8,lastClick);
 //
 //                if(t1.x++ % 2 == 0)
-//                    new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
+//                    new_phys_charge.setPower(new_phys_charge.getPower()*-1);
 //
-//                vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
+//                vt.smt.Render.Fleck newCharge = new vt.smt.Render.Fleck(new_phys_charge);
 //                newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint())));
-//                charges.add(newCharge);
+//                flecks.add(newCharge);
 //                calculator.addCharge(new_phys_charge);
-//                field.getChildren().add(charges.get(charges.size()-1));
+//                field.getChildren().add(flecks.get(flecks.size()-1));
 //                Platform.runLater(()->{field.setFieldByAngle(calculator.getVectorAngleInPoint());});
             });
 
@@ -107,9 +99,7 @@ public class Controller {
         contextMenu = new ContextMenu(add);
     }
     public void onFieldClick(MouseEvent click){
-
         lastClick = new Point2D(click.getSceneX(),click.getSceneY());
-
         if(click.getButton().equals(MouseButton.SECONDARY))
             contextMenu.show(field,click.getScreenX(),click.getScreenY());
     }

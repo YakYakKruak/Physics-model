@@ -4,22 +4,22 @@ package vt.smt.Physics;
 import javafx.geometry.Point2D;
 
 public class Charge {
-    private double charge;
+    private double power;
     private Point2D position;
 
-    public Charge(double charge, Point2D position) {
-        this.charge = charge;
+    public Charge(double power, Point2D position) {
+        this.power = power;
         this.position = position;
     }
-    public Charge(Charge charge){
-        this(charge.getCharge(),charge.getPosition());
+    public Charge(Charge proto){
+        this(proto.getPower(), proto.getPosition());
     }
-    public double getCharge() {
-        return charge;
+    public double getPower() {
+        return power;
     }
 
-    public void setCharge(double charge) {
-        this.charge = charge;
+    public void setPower(double power) {
+        this.power = power;
     }
 
     public Point2D getPosition() {
