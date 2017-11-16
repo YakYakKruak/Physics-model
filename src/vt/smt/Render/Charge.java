@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 
 public class Charge  extends Pane {
-    private vt.smt.Physics.Charge e;
+    private double power;
     private ImageView rendered;
 
     public Charge(){
@@ -47,7 +47,7 @@ public class Charge  extends Pane {
     }
 
     public void setCharge(vt.smt.Physics.Charge e) {
-        this.e = e;
+        this.power = e.getCharge();
         rendered.setTranslateX( e.getPosition().getX());
         rendered.setTranslateY( e.getPosition().getY());
         loadImage(e.getCharge() >= 0);
