@@ -11,7 +11,9 @@ public class Charge {
         this.charge = charge;
         this.position = position;
     }
-
+    public Charge(Charge charge){
+        this(charge.getCharge(),charge.getPosition());
+    }
     public double getCharge() {
         return charge;
     }
