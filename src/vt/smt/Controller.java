@@ -29,7 +29,7 @@ public class Controller {
     private MenuItem  add = new MenuItem("Добавить заряд");
 
     public void initialize(){
-        calculator.setКондюк(new Кондюк(new Point2D(800,200),300,30,400,0.));
+        calculator.setКондюк(new Кондюк(new Point2D(800,200),300,30,400,10E-9));
         initContextMenu();
         init_prototypes();
 
