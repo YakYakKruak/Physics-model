@@ -10,25 +10,32 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+import static java.lang.Math.*;
+
 
 public class VectorField extends Pane implements VectorFieldConsumer {
     private Image texture;
     private List<ImageView> vectors = new LinkedList<>();
     // Последнее переданное физическое поле (для ресайза)
-    private Function<Point2D, Double> lastU = f->0.;
+
+    private Function<Point2D, Point2D> lastU = f->new Point2D(0.,0.);
+    private double max_e = Double.MIN_VALUE;
+    private double min_e = Double.MAX_VALUE;
 
     public VectorField(){
         super();
         texture = new Image(getClass().getResourceAsStream("/res/miniArrow.png"));
     }
 
+    private double getAngleOfVector(Point2D p){
+        return signum(p.getY())*toDegrees(acos(p.dotProduct(1.,0)/(sqrt(p.getX()*p.getX() + p.getY()*p.getY()))));
+    }
     @Override
-    public void setFieldByAngle(Function<Point2D, Double> f_angle) {
-        lastU = f_angle;
-        vectors.forEach(e->{
-            Point2D vector_pos = new Point2D(e.getTranslateX()+texture.getWidth()/2
-                    ,                       +e.getTranslateY()+texture.getHeight()/2);
-            e.setRotate(-f_angle.apply(vector_pos));
+    public void setFieldByPoint(Function<Point2D, Point2D> u) {
+        this.lastU = u;
+        vectors.forEach(v->{
+            Point2D p = u.apply(new Point2D(v.getTranslateX(), v.getTranslateY()));
+            v.setRotate(getAngleOfVector(p));
         });
     }
 
@@ -36,10 +43,8 @@ public class VectorField extends Pane implements VectorFieldConsumer {
     public void resize(double width, double height) {
         // +340 - для стрелочек под меню. По идее, величина,
         // равная размеру меню
-
         super.resize     (width, height);
         this.resize_field(width + 340, height);
-
     }
 
     private void resize_field(double width, double height){
@@ -64,9 +69,8 @@ public class VectorField extends Pane implements VectorFieldConsumer {
                 vector.setTranslateY(i_h);
 
 
-                vector.setRotate(-lastU.apply(new Point2D(vector.getTranslateX()+texture.getWidth()/2,
-                        vector.getTranslateY()+texture.getHeight()/2)));
-
+                Point2D p = lastU.apply(new Point2D(vector.getTranslateX(), vector.getTranslateY()));
+                vector.setRotate(getAngleOfVector(p));
                 vectors.add(vector);
                 j_w += w_step;
             }

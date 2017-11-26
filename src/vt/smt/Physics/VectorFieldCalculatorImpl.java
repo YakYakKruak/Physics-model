@@ -1,9 +1,7 @@
 package vt.smt.Physics;
 
 import javafx.geometry.Point2D;
-import sun.misc.Unsafe;
 
-import java.lang.annotation.Native;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -12,7 +10,7 @@ import static java.lang.Math.*;
 
 public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
 
-    private List<Charge> charges;
+    private final List<Charge> charges;
     private Кондюк кондюк;
 
     public VectorFieldCalculatorImpl() {
@@ -51,16 +49,6 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
         };
     }
 
-    @Deprecated
-    @Override
-    public Function<Point2D, Double> getVectorAngleInPoint() {
-        Function<Point2D, Point2D > f = getField();
-        return point2D -> {
-            Point2D p = f.apply(point2D);
-            return -signum(p.getY())*toDegrees(acos(p.dotProduct(1.,0)/(sqrt(p.getX()*p.getX() + p.getY()*p.getY()))));
-        };
-    }
-
     @Override
     public void addCharge(Charge charge) {
         charges.add(charge);
@@ -74,4 +62,5 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
     public void setКондюк(Кондюк c) {
         this.кондюк = c;
     }
+
 }

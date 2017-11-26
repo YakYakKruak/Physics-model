@@ -56,7 +56,7 @@ public class Controller {
         conduc = new Кондюк(new Point2D(200,400),10,30,10,k);
         calculator.setКондюк(conduc);
         initContextMenu();
-        field.setFieldByAngle(calculator.getVectorAngleInPoint());
+        field.setFieldByPoint(calculator.getField());
         inputDistance.setOnKeyReleased(e-> {
             try{
                 conduc.setDistance(Double.parseDouble(inputDistance.getText()));
@@ -112,7 +112,7 @@ public class Controller {
         plast2.setWidth(plast1.getWidth());
         plast2.setHeight(plast1.getHeight());
         calculator.setКондюк(conduc);
-        field.setFieldByAngle(calculator.getVectorAngleInPoint());
+        field.setFieldByPoint(calculator.getField());
     }
 
     private Point2D lastClick; // to set the charge after the click to a proper position
@@ -130,11 +130,12 @@ public class Controller {
                 if(t1.x++ % 2 == 0)
                     new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
                 vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
-                newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByAngle(calculator.getVectorAngleInPoint())));
+                newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByPoint(calculator.getField())));
+
                 charges.add(newCharge);
                 calculator.addCharge(new_phys_charge);
                 field.getChildren().add(charges.get(charges.size()-1));
-                Platform.runLater(()->{field.setFieldByAngle(calculator.getVectorAngleInPoint());});
+                Platform.runLater(()->field.setFieldByPoint(calculator.getField()));
             });
 
         });
