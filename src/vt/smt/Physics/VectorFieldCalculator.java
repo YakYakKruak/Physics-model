@@ -13,3 +13,4 @@ public interface VectorFieldCalculator {
     void setКондюк(Кондюк c);
     List<Charge> getCharges();
 }
+

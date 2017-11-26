@@ -74,3 +74,4 @@ public class VectorField extends Pane implements VectorFieldConsumer {
         }
     }
 }
+

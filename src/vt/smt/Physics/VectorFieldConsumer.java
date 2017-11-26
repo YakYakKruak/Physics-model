@@ -8,3 +8,4 @@ public interface VectorFieldConsumer {
     void setFieldByAngle(Function<Point2D, Double> f_angle);
 }
 
+

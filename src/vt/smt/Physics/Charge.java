@@ -30,3 +30,4 @@ public class Charge {
         this.position = position;
     }
 }
+

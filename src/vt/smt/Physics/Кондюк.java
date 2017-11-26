@@ -59,3 +59,4 @@ public class Кондюк {
         this.charge = charge;
     }
 }
+

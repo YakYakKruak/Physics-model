@@ -59,3 +59,4 @@ public class Charge  extends Pane {
     }
 
 }
+

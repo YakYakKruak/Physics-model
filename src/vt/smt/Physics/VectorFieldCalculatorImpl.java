@@ -1,9 +1,7 @@
 package vt.smt.Physics;
 
 import javafx.geometry.Point2D;
-import sun.misc.Unsafe;
 
-import java.lang.annotation.Native;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -75,3 +73,4 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
         this.кондюк = c;
     }
 }
+

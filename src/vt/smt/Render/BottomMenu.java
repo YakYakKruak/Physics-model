@@ -8,3 +8,4 @@ public class BottomMenu extends HBox {
         super();
     }
 }
+
