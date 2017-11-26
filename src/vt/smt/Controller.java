@@ -1,8 +1,6 @@
 package vt.smt;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -10,7 +8,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import vt.smt.Physics.Charge;
 import vt.smt.Physics.VectorFieldCalculator;
 import vt.smt.Physics.VectorFieldCalculatorImpl;
@@ -43,6 +40,7 @@ public class Controller {
     @FXML
     private TextField inputLenght;
 
+
     @FXML //  fx:id="fruitCombo"
     private ComboBox<String> fruitCombo; // Value injected by FXMLLoader
 
@@ -56,8 +54,6 @@ public class Controller {
 
     public void initialize(){
         conduc = new Кондюк(new Point2D(200,400),10,30,10,k);
-
-
         calculator.setКондюк(conduc);
         initContextMenu();
         field.setFieldByAngle(calculator.getVectorAngleInPoint());
