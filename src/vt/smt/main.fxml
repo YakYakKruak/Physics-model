@@ -9,7 +9,7 @@
 <?import vt.smt.Render.*?>
 <?import java.lang.String?>
 
-<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller" width="800" height="800">
+<Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller"  width="800" height="800" >
 <BorderPane style="-fx-background-color: dodgerblue;">
     <top>
     </top>

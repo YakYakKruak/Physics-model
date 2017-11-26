@@ -38,6 +38,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
             e.setRotate(-f_angle.apply(vector_pos));
 
         });
+
     }
 
     @Override

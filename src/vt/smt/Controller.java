@@ -1,16 +1,16 @@
 package vt.smt;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import vt.smt.Physics.Charge;
 import vt.smt.Physics.VectorFieldCalculator;
 import vt.smt.Physics.VectorFieldCalculatorImpl;
@@ -52,22 +52,11 @@ public class Controller {
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
     private MenuItem  add = new MenuItem("Добавить заряд");
     private double k = 1E-9;
+    private Alert alert = new Alert(Alert.AlertType.ERROR);
 
     public void initialize(){
-
         conduc = new Кондюк(new Point2D(200,400),10,30,10,k);
 
-        fruitCombo.setOnAction((event) -> {
-            String s = fruitCombo.getSelectionModel().getSelectedItem();
-            if(s.equals("пКл"))
-                k = 1E-12;
-            else if (s.equals("нКл"))
-                k = 1E-9;
-            else if(s.equals("мкКл"))
-                k = 1E-6;
-            else
-                k = 1E-3;
-        });
 
         calculator.setКондюк(conduc);
         initContextMenu();
@@ -76,21 +65,38 @@ public class Controller {
             try{
                 conduc.setDistance(Double.parseDouble(inputDistance.getText()));
                 redrawPlasts();
-            } catch (NumberFormatException nfe) {}
+            } catch (NumberFormatException nfe) {
+
+            }
         });
 
         inputLenght.setOnKeyReleased( event -> {
             try{
                 conduc.setPlateLength(Double.parseDouble(inputLenght.getText()));
-            } catch (NumberFormatException nfe) {}
+            } catch (NumberFormatException nfe) {
+//                alert.setContentText("Некорректный ввод");
+//                alert.showAndWait();
+            }
 
             redrawPlasts();
         });
 
         inputPower.setOnKeyReleased( event -> {
             try{
+//                String s = fruitCombo.getSelectionModel().getSelectedItem();
+//                if(s.equals("пКл"))
+//                    k = 1E-12;
+//                else if (s.equals("нКл"))
+//                    k = 1E-9;
+//                else if(s.equals("мкКл"))
+//                    k = 1E-6;
+//                else
+//                    k = 1E-3;
                 conduc.setCharge(Double.parseDouble(inputPower.getText())*k);
-            } catch (NumberFormatException nfe) {}
+            } catch (NumberFormatException nfe) {
+//                alert.setContentText("Некорректный ввод");
+//                alert.showAndWait();
+            }
 
             redrawPlasts();
         });
@@ -105,7 +111,7 @@ public class Controller {
         plast1.setHeight(conduc.getPlateLength()*37.5);
         plast1.setFill(Color.BLACK);
 
-        plast2.setTranslateX(plast1.getTranslateX() + conduc.getDistance()*37.795 + 12);
+        plast2.setTranslateX(plast1.getTranslateX() + conduc.getDistance()*37.795);
         plast2.setTranslateY(conduc.getPlateCenter().getY() - conduc.getPlateLength()*37.5/2);
         plast2.setWidth(plast1.getWidth());
         plast2.setHeight(plast1.getHeight());
@@ -123,8 +129,8 @@ public class Controller {
 
         add.setOnAction(e->{
             Platform.runLater(()->{
-                vt.smt.Physics.Charge new_phys_charge;
-                new_phys_charge = new Charge(6E-4,lastClick);
+                Charge new_phys_charge;
+                new_phys_charge = new Charge(6E-9,lastClick);
                 if(t1.x++ % 2 == 0)
                     new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
                 vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
@@ -145,6 +151,7 @@ public class Controller {
         if(click.getButton().equals(MouseButton.SECONDARY))
             contextMenu.show(field,click.getScreenX(),click.getScreenY());
     }
+
 
 
 }
