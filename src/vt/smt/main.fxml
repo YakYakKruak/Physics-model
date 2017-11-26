@@ -24,8 +24,8 @@
         <VBox alignment="CENTER"  style=" -fx-padding: 10px; -fx-spacing:10px ;-fx-border-color:white; -fx-border-radius: 10px ; -fx-background-color: dodgerblue; -fx-min-width: 100px; -fx-max-height: 200px;">
             <Label style="-fx-text-fill: white;">Установить заряд пластин:</Label>
             <HBox spacing="5">
-                <TextField fx:id="inputPower" style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px"  />
-                <ComboBox style="-fx-max-width: 50px; -fx-text-fill: white; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px">
+                <TextField  fx:id="inputPower" style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px"  />
+                <ComboBox fx:id="fruitCombo" style="-fx-max-width: 50px; -fx-text-fill: white; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="пКл" />

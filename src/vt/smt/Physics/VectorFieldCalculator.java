@@ -14,3 +14,5 @@ public interface VectorFieldCalculator {
     List<Charge> getCharges();
 }
 
+
+
