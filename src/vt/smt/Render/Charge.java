@@ -2,7 +2,6 @@ package vt.smt.Render;
 
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
-import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -47,12 +46,16 @@ public class Charge  extends Pane {
             Platform.runLater(()-> {
                 InnerShadow sh = new InnerShadow(5, Color.RED);
                 sh.setInput(new DropShadow(100, Color.RED));
-                rendered.setEffect(new DropShadow(100, Color.RED));
+                rendered.setEffect(sh);
             });
         }
         else {
             rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
-            Platform.runLater(()->rendered.setEffect(new Bloom()));
+            Platform.runLater(()->{
+                InnerShadow sh = new InnerShadow(5, Color.AQUA);
+                sh.setInput(new DropShadow(100, Color.BLUE));
+                rendered.setEffect(sh);
+            });
         }
 
 
