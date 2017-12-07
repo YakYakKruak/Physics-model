@@ -20,7 +20,6 @@ public class VectorField extends Pane implements VectorFieldConsumer {
 
     private Function<Point2D, Point2D> lastU = f->new Point2D(0.,0.);
     private double max_e = Double.MIN_VALUE;
-    private double min_e = Double.MAX_VALUE;
 
     public VectorField(){
         super();
@@ -36,6 +35,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
         vectors.forEach(v->{
             Point2D p = u.apply(new Point2D(v.getTranslateX(), v.getTranslateY()));
             v.setRotate(getAngleOfVector(p));
+            max_e = max(max_e, p.magnitude());
         });
     }
 
@@ -58,6 +58,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
         double i_h = 0.;
         double j_w = 0.;
 
+//        Shadow sh = new Shadow(20,Color.BLACK);
 
         while (i_h < height){
             j_w = 0.;
@@ -71,6 +72,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
 
                 Point2D p = lastU.apply(new Point2D(vector.getTranslateX(), vector.getTranslateY()));
                 vector.setRotate(getAngleOfVector(p));
+//                vector.setEffect(sh);
                 vectors.add(vector);
                 j_w += w_step;
             }

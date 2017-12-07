@@ -1,9 +1,14 @@
 package vt.smt.Render;
 
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 /**
  * Created by semitro on 03.11.17.
@@ -37,11 +42,21 @@ public class Charge  extends Pane {
     }
 
     private void loadImage(boolean positive_charge){
-        if (positive_charge)
+        if (positive_charge) {
             rendered.setImage(new Image(getClass().getResourceAsStream("/res/plusE.png")));
-        else
-          rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
-   }
+            Platform.runLater(()-> {
+                InnerShadow sh = new InnerShadow(5, Color.RED);
+                sh.setInput(new DropShadow(100, Color.RED));
+                rendered.setEffect(new DropShadow(100, Color.RED));
+            });
+        }
+        else {
+            rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
+            Platform.runLater(()->rendered.setEffect(new Bloom()));
+        }
+
+
+    }
     public vt.smt.Physics.Charge getCharge() {
         return e;
     }
