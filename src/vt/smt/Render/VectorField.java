@@ -1,6 +1,7 @@
 package vt.smt.Render;
 
 import javafx.geometry.Point2D;
+import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -59,7 +60,8 @@ public class VectorField extends Pane implements VectorFieldConsumer {
         double j_w = 0.;
 
 //        Shadow sh = new Shadow(20,Color.BLACK);
-
+//        ColorAdjust color = new ColorAdjust(1, 1, 0.1, 1);
+        PerspectiveTransform color = new PerspectiveTransform(0, 10,14,15,12,155,14,010);
         while (i_h < height){
             j_w = 0.;
             while(j_w < width){
@@ -73,6 +75,7 @@ public class VectorField extends Pane implements VectorFieldConsumer {
                 Point2D p = lastU.apply(new Point2D(vector.getTranslateX(), vector.getTranslateY()));
                 vector.setRotate(getAngleOfVector(p));
 //                vector.setEffect(sh);
+                vector.setEffect(color);
                 vectors.add(vector);
                 j_w += w_step;
             }
