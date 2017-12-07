@@ -70,8 +70,7 @@ public class Controller {
             try{
                 conduc.setPlateLength(Double.parseDouble(inputLenght.getText()));
             } catch (NumberFormatException nfe) {
-//                alert.setContentText("Некорректный ввод");
-//                alert.showAndWait();
+
             }
 
             redrawPlasts();
@@ -79,15 +78,7 @@ public class Controller {
 
         inputPower.setOnKeyReleased( event -> {
             try{
-//                String s = fruitCombo.getSelectionModel().getSelectedItem();
-//                if(s.equals("пКл"))
-//                    k = 1E-12;
-//                else if (s.equals("нКл"))
-//                    k = 1E-9;
-//                else if(s.equals("мкКл"))
-//                    k = 1E-6;
-//                else
-//                    k = 1E-3;
+
                 conduc.setCharge(Double.parseDouble(inputPower.getText())*k);
             } catch (NumberFormatException nfe) {
 //                alert.setContentText("Некорректный ввод");
@@ -134,6 +125,7 @@ public class Controller {
 
                 charges.add(newCharge);
                 calculator.addCharge(new_phys_charge);
+                field.addChargeToSkipEIn(newCharge);
                 field.getChildren().add(charges.get(charges.size()-1));
                 Platform.runLater(()->field.setFieldByPoint(calculator.getField()));
             });
