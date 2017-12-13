@@ -1,5 +1,3 @@
-<!--<?import javafx.scene.Scene?>-->
-<!--<?import vt.smt.Render.*?>-->
 
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
@@ -10,22 +8,21 @@
 <?import java.lang.String?>
 
 <Scene xmlns:fx="http://javafx.com/fxml" fx:controller="vt.smt.Controller"  width="800" height="800" >
-<BorderPane style="-fx-background-color: dodgerblue;">
+<BorderPane styleClass="electricField">
     <top>
     </top>
     <center>
-
         <VectorField onMouseClicked="#onFieldClick" fx:id="field">
             <Rectangle fx:id="plast1"/>
             <Rectangle fx:id="plast2"/>
         </VectorField>
     </center>
 <right>
-        <VBox alignment="CENTER"  style=" -fx-padding: 10px; -fx-spacing:10px ;-fx-border-color:white; -fx-border-radius: 10px ; -fx-background-color: dodgerblue; -fx-min-width: 100px; -fx-max-height: 200px;">
-            <Label style="-fx-text-fill: white;">Установить заряд пластин:</Label>
+        <VBox alignment="CENTER"  styleClass="rightMenu">
+            <Label style="-fx-text-fill: white; ">Заряд пластин:</Label>
             <HBox spacing="5">
-                <TextField  fx:id="inputPower" style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px"  />
-                <ComboBox fx:id="fruitCombo" style="-fx-max-width: 50px; -fx-text-fill: white; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px">
+                <TextField  styleClass="justInput" fx:id="inputPower"  />
+                <ComboBox fx:id="fruitCombo" styleClass="justInput">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="пКл" />
@@ -36,19 +33,14 @@
                     </items>
                 </ComboBox>
             </HBox>
-            <Label style="-fx-text-fill: white;">Установить ширину пластин:</Label>
+            <Label style="-fx-text-fill: white;">Длина пластин:</Label>
             <HBox style="-fx-spacing: 10px">
-                <TextField fx:id="inputWidth" style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px"  />
+                <TextField fx:id="inputLenght" styleClass="justInput" />
                 <Label style="-fx-text-fill: white;"> см </Label>
             </HBox>
-            <Label style="-fx-text-fill: white;">Установить длину пластин:</Label>
+            <Label style="-fx-text-fill: white;">Расстояние между пластинами:</Label>
             <HBox style="-fx-spacing: 10px">
-                <TextField fx:id="inputLenght" style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px"  />
-                <Label style="-fx-text-fill: white;"> см </Label>
-            </HBox>
-            <Label style="-fx-text-fill: white;">Установить расстояние между пластинами:</Label>
-            <HBox style="-fx-spacing: 10px">
-                <TextField fx:id="inputDistance" style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px"  />
+                <TextField fx:id="inputDistance" styleClass="justInput"  />
                 <Label style="-fx-text-fill: white;"> см </Label>
             </HBox>
         </VBox>

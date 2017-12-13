@@ -38,8 +38,6 @@ public class Controller {
     @FXML
     private TextField inputDistance;
 
-    @FXML
-    private TextField inputWidth;
 
     @FXML
     private TextField inputLenght;
