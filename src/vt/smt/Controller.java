@@ -17,6 +17,10 @@ import vt.smt.Render.VectorField;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+import static java.lang.Math.random;
+
 public class Controller {
 
     @FXML
@@ -40,7 +44,6 @@ public class Controller {
     @FXML
     private TextField inputLenght;
 
-
     @FXML //  fx:id="fruitCombo"
     private ComboBox<String> fruitCombo; // Value injected by FXMLLoader
 
@@ -49,11 +52,13 @@ public class Controller {
     private List<vt.smt.Render.Charge> charges = new LinkedList<>();
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
     private MenuItem  add = new MenuItem("Добавить заряд");
-    private double k = 1E-9;
+    private double plastCharge = 1E-9;
+    // Коэффициент - 'максимальное значение напряжённости'
+    private double fieldOpacityFactor = 8.85*10E-10;
     private Alert alert = new Alert(Alert.AlertType.ERROR);
 
     public void initialize(){
-        conduc = new Кондюк(new Point2D(200,400),10,30,10,k);
+        conduc = new Кондюк(new Point2D(200,400),10,30,10,plastCharge);
         calculator.setКондюк(conduc);
         initContextMenu();
         field.setFieldByPoint(calculator.getField());
@@ -61,30 +66,20 @@ public class Controller {
             try{
                 conduc.setDistance(Double.parseDouble(inputDistance.getText()));
                 redrawPlasts();
-            } catch (NumberFormatException nfe) {
-
-            }
+            } catch (NumberFormatException nfe) {}
         });
 
         inputLenght.setOnKeyReleased( event -> {
             try{
                 conduc.setPlateLength(Double.parseDouble(inputLenght.getText()));
-            } catch (NumberFormatException nfe) {
-
-            }
-
+            } catch (NumberFormatException nfe) {}
             redrawPlasts();
         });
 
         inputPower.setOnKeyReleased( event -> {
             try{
-
-                conduc.setCharge(Double.parseDouble(inputPower.getText())*k);
-            } catch (NumberFormatException nfe) {
-//                alert.setContentText("Некорректный ввод");
-//                alert.showAndWait();
-            }
-
+                conduc.setCharge(Double.parseDouble(inputPower.getText())*plastCharge);
+            } catch (NumberFormatException nfe) {}
             redrawPlasts();
         });
 
@@ -117,7 +112,7 @@ public class Controller {
         add.setOnAction(e->{
             Platform.runLater(()->{
                 Charge new_phys_charge;
-                new_phys_charge = new Charge(6E-9,lastClick);
+                new_phys_charge = new Charge(random()*6E+9,lastClick);
                 if(t1.x++ % 2 == 0)
                     new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
                 vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
@@ -125,22 +120,22 @@ public class Controller {
 
                 charges.add(newCharge);
                 calculator.addCharge(new_phys_charge);
-                field.addChargeToSkipEIn(newCharge);
                 field.getChildren().add(charges.get(charges.size()-1));
+                field.setMax_e(max (field.getMax_e(),
+                                   abs(new_phys_charge.getCharge())/fieldOpacityFactor)
+                );
                 Platform.runLater(()->field.setFieldByPoint(calculator.getField()));
+
             });
 
         });
         contextMenu = new ContextMenu(add);
     }
+
     public void onFieldClick(MouseEvent click){
-
         lastClick = new Point2D(click.getSceneX(),click.getSceneY());
-
         if(click.getButton().equals(MouseButton.SECONDARY))
             contextMenu.show(field,click.getScreenX(),click.getScreenY());
     }
-
-
 
 }
