@@ -2,6 +2,7 @@ package vt.smt;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -13,10 +14,12 @@ import vt.smt.Physics.VectorFieldCalculatorImpl;
 import vt.smt.Physics.Кондюк;
 import vt.smt.Render.VectorField;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static java.lang.Math.*;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
 
 public class Controller {
 
@@ -35,7 +38,6 @@ public class Controller {
     @FXML
     private TextField inputDistance;
 
-
     @FXML
     private TextField inputLenght;
 
@@ -43,10 +45,10 @@ public class Controller {
     private ComboBox<String> fruitCombo; // Value injected by FXMLLoader
 
     private Кондюк conduc;
-    private ContextMenu contextMenu;
+
+    private ContextMenu contextMenu = null;
     private List<vt.smt.Render.Charge> charges = new LinkedList<>();
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
-    private MenuItem  add = new MenuItem("Добавить заряд");
     private double plastCharge = 1E-9;
     // Коэффициент - 'максимальное значение напряжённости'
     private double fieldOpacityFactor = 8.85*10E-10;
@@ -86,7 +88,6 @@ public class Controller {
         plast1.setTranslateY(conduc.getPlateCenter().getY() - conduc.getPlateLength()*37.5/2);
         plast1.setWidth(7);
         plast1.setHeight(conduc.getPlateLength()*37.5);
-//        plast1.setFill(Color.BLACK);
 
         plast2.setTranslateX(plast1.getTranslateX() + conduc.getDistance()*37.795 - 15);
         plast2.setTranslateY(conduc.getPlateCenter().getY() - conduc.getPlateLength()*37.5/2);
@@ -98,33 +99,41 @@ public class Controller {
 
     private Point2D lastClick; // to set the charge after the click to a proper position
 
-    private void initContextMenu(){
-        class Костыль{
-            public int x;
-        }
-        Костыль t1 = new Костыль();
-
-        add.setOnAction(e->{
-            Platform.runLater(()->{
-                Charge new_phys_charge;
-                new_phys_charge = new Charge(random()*6E-9,lastClick);
-                if(t1.x++ % 2 == 0)
-                    new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
-                vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
-                newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByPoint(calculator.getField())));
-
-                charges.add(newCharge);
-                calculator.addCharge(new_phys_charge);
-                field.getChildren().add(charges.get(charges.size()-1));
-                field.setMax_e(max (field.getMax_e(),
-                                   abs(new_phys_charge.getCharge())/fieldOpacityFactor)
-                );
-                Platform.runLater(()->field.setFieldByPoint(calculator.getField()));
-
-            });
+    public void addNegative(){
+        addCharge(-1E-9);
+    }
+    public void addPositive(){
+        addCharge(1E-9);
+    }
+    private void addCharge(double value){
+        Platform.runLater(()->{
+            Charge new_phys_charge;
+            new_phys_charge = new Charge(value,lastClick);
+            vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
+            newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByPoint(calculator.getField())));
+            charges.add(newCharge);
+            calculator.addCharge(new_phys_charge);
+            field.getChildren().add(charges.get(charges.size()-1));
+            field.setMax_e(max (field.getMax_e(),
+                    abs(new_phys_charge.getCharge())/fieldOpacityFactor)
+            );
+            Platform.runLater(()->field.setFieldByPoint(calculator.getField()));
 
         });
-        contextMenu = new ContextMenu(add);
+    }
+
+    private void initContextMenu(){
+        if(contextMenu == null)
+            Platform.runLater(()->{
+                try{
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("addChargeMenu.fxml"));
+                    loader.setController(this);
+                    contextMenu = loader.load();
+                }catch (IOException io){
+                    System.err.println("ЭТО КАПЕЦ, ЗДЕСЬ НЕТ ФХМЛ ДЛЯ МЕНЮ ДОБАВЛЕНИЯ ЗАРЯДА.");
+                    io.printStackTrace();
+                }
+            });
     }
 
     public void onFieldClick(MouseEvent click){

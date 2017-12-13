@@ -21,6 +21,7 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("/styles/violet.css").toExternalForm());
 
         primaryStage.show();
+
     }
 
 
