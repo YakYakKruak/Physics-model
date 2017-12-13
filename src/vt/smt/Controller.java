@@ -112,7 +112,7 @@ public class Controller {
         add.setOnAction(e->{
             Platform.runLater(()->{
                 Charge new_phys_charge;
-                new_phys_charge = new Charge(random()*6E+9,lastClick);
+                new_phys_charge = new Charge(random()*6E-9,lastClick);
                 if(t1.x++ % 2 == 0)
                     new_phys_charge.setCharge(new_phys_charge.getCharge()*-1);
                 vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
