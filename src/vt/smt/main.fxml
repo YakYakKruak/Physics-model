@@ -13,15 +13,15 @@
     </top>
     <center>
         <VectorField onMouseClicked="#onFieldClick" fx:id="field">
-            <Rectangle fx:id="plast1"/>
-            <Rectangle fx:id="plast2"/>
+            <Rectangle styleClass="plast" fx:id="plast1"/>
+            <Rectangle styleClass="plast" fx:id="plast2"/>
         </VectorField>
     </center>
 <right>
         <VBox alignment="CENTER"  styleClass="rightMenu">
             <Label style="-fx-text-fill: white; ">Заряд пластин:</Label>
             <HBox spacing="5">
-                <TextField  styleClass="justInput" fx:id="inputPower"  />
+                <TextField styleClass="justInput" fx:id="inputPower"  />
                 <ComboBox fx:id="fruitCombo" styleClass="justInput">
                     <items>
                         <FXCollections fx:factory="observableArrayList">

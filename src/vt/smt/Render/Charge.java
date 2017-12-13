@@ -45,7 +45,9 @@ public class Charge  extends Pane {
             rendered.setImage(new Image(getClass().getResourceAsStream("/res/plusE.png")));
             Platform.runLater(()-> {
                 InnerShadow sh = new InnerShadow(5, Color.RED);
-                sh.setInput(new DropShadow(100, Color.RED));
+                DropShadow dh =new DropShadow(100, Color.RED);
+                dh.setSpread(0.9);
+                sh.setInput(dh);
                 rendered.setEffect(sh);
             });
         }
@@ -53,7 +55,10 @@ public class Charge  extends Pane {
             rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
             Platform.runLater(()->{
                 InnerShadow sh = new InnerShadow(5, Color.AQUA);
-                sh.setInput(new DropShadow(100, Color.BLUE));
+                DropShadow dh = new DropShadow(100, Color.BLUE);
+                dh.setSpread(0.9);
+                sh.setInput(dh);
+
                 rendered.setEffect(sh);
             });
         }

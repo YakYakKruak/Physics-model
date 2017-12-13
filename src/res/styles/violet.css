@@ -1,11 +1,10 @@
 .electricField{
     -fx-background-color: darkviolet;
-
 }
 .rightMenu{
     -fx-padding: 10px;
     -fx-spacing: 10px;
-    -fx-border-color: lightseagreen;
+    -fx-border-color: #c57bff;
     -fx-border-radius: 12px;
     -fx-background-color: transparent;
     -fx-min-width:  100px;
@@ -17,4 +16,9 @@
     -fx-background-color: transparent;
     -fx-border-color: white;
     -fx-border-radius: 2px;
+}
+.plast{
+    -fx-pref-width: 5px;
+    -fx-fill: darkviolet;
+    -fx-effect: dropshadow(gaussian, #c57bff, 6, 1.0, 0, 0);
 }

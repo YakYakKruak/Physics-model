@@ -6,7 +6,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import vt.smt.Physics.Charge;
 import vt.smt.Physics.VectorFieldCalculator;
@@ -17,9 +16,7 @@ import vt.smt.Render.VectorField;
 import java.util.LinkedList;
 import java.util.List;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.max;
-import static java.lang.Math.random;
+import static java.lang.Math.*;
 
 public class Controller {
 
@@ -56,7 +53,7 @@ public class Controller {
     private Alert alert = new Alert(Alert.AlertType.ERROR);
 
     public void initialize(){
-        conduc = new Кондюк(new Point2D(200,400),10,30,10,plastCharge);
+        conduc = new Кондюк(new Point2D(200,385),14,50,22,plastCharge);
         calculator.setКондюк(conduc);
         initContextMenu();
         field.setFieldByPoint(calculator.getField());
@@ -85,13 +82,13 @@ public class Controller {
     }
 
     private void redrawPlasts(){
-        plast1.setTranslateX(conduc.getPlateCenter().getX() - 12);
+        plast1.setTranslateX(conduc.getPlateCenter().getX() + 12);
         plast1.setTranslateY(conduc.getPlateCenter().getY() - conduc.getPlateLength()*37.5/2);
-        plast1.setWidth(5);
+        plast1.setWidth(7);
         plast1.setHeight(conduc.getPlateLength()*37.5);
-        plast1.setFill(Color.BLACK);
+//        plast1.setFill(Color.BLACK);
 
-        plast2.setTranslateX(plast1.getTranslateX() + conduc.getDistance()*37.795);
+        plast2.setTranslateX(plast1.getTranslateX() + conduc.getDistance()*37.795 - 15);
         plast2.setTranslateY(conduc.getPlateCenter().getY() - conduc.getPlateLength()*37.5/2);
         plast2.setWidth(plast1.getWidth());
         plast2.setHeight(plast1.getHeight());
