@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.Camera;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
@@ -52,7 +53,7 @@ public class Controller {
     private List<vt.smt.Render.Charge> charges = new LinkedList<>();
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
     private double plastCharge = 1E-9;
-
+    private Camera c;
     // Коэффициент - 'максимальное значение напряжённости'
     private double fieldOpacityFactor = 8.85*10E-10;
     private Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -108,6 +109,7 @@ public class Controller {
         });
 
         redrawPlasts();
+
     }
 
     private void redrawPlasts(){
