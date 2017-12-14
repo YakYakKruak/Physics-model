@@ -128,10 +128,10 @@ public class Controller {
     public void addPositive(){
         addCharge(1E-9);
     }
+
     private void addCharge(double value){
         Platform.runLater(()->{
-            Charge new_phys_charge;
-            new_phys_charge = new Charge(value,lastClick);
+            Charge new_phys_charge = new Charge(value,lastClick);
             vt.smt.Render.Charge newCharge = new vt.smt.Render.Charge(new_phys_charge);
             newCharge.setWhileDragging(()->Platform.runLater(()->field.setFieldByPoint(calculator.getField())));
             charges.add(newCharge);

@@ -1,6 +1,7 @@
 .electricField{
     -fx-background-color: darkviolet;
 }
+
 .rightMenu{
     -fx-padding: 10px;
     -fx-spacing: 10px;
@@ -39,7 +40,6 @@
 .charge{
     -fx-scale-y: 1.0;
     -fx-scale-x: 1.0;
-
 }
 .charge:hover{
     -fx-scale-y: 1.1;

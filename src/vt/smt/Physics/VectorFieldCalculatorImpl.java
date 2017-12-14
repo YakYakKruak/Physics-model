@@ -16,7 +16,6 @@ public class VectorFieldCalculatorImpl implements VectorFieldCalculator {
     public VectorFieldCalculatorImpl() {
         charges = new ArrayList<>();
     }
-    private final double PIXELS_IN_METR = 100_000;
 
     @Override
     public Function<Point2D, Point2D> getField() {

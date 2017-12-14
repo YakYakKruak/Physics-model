@@ -4,13 +4,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -18,13 +18,14 @@ import java.io.IOException;
 /**
  * Created by semitro on 03.11.17.
  */
-public class Charge  extends Pane {
+public class Charge  extends Parent {
     private vt.smt.Physics.Charge e;
     private ImageView rendered;
 
     private ContextMenu onClickMenu;
+
     @FXML // Меняет величину заряда
-    private TextField   menuChangeValue;
+    private TextField menuChangeValue;
 
     private Charge(){
         rendered = new ImageView();
@@ -34,6 +35,7 @@ public class Charge  extends Pane {
         rendered.setLayoutX(-rendered.getBoundsInLocal().getWidth()/2.);
         rendered.setLayoutY(-rendered.getBoundsInLocal().getHeight()/2.);
         this.setOnMouseDragged(event -> {
+//            this.toBack();
             rendered.setTranslateX(event.getX());
             rendered.setTranslateY(event.getY());
             e.setPosition(new Point2D(event.getX(),event.getY()));
@@ -66,20 +68,11 @@ public class Charge  extends Pane {
             e1.printStackTrace();
         }
     }
+
     private void initBeauty(){
         rendered.getStyleClass().add("charge");
-//        rendered.setOnMouseEntered(e->{
-//            ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200),rendered);
-//            scaleTransition.setFromX(1.0);
-//            scaleTransition.setFromY(1.0);
-//            scaleTransition.setToX(1.2);
-//            scaleTransition.setToY(1.2);
-//
-//            scaleTransition.play();
-//            scaleTransition.
-//        });
-
     }
+
     public void menuValueChanged(){
         try{
             e.setCharge(Double.parseDouble(menuChangeValue.getText()));
