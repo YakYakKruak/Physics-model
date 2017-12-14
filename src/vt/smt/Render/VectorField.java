@@ -10,63 +10,74 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+import static java.lang.Math.*;
+
 
 public class VectorField extends Pane implements VectorFieldConsumer {
     private Image texture;
     private List<ImageView> vectors = new LinkedList<>();
-    public VectorField(){
+    // Последнее переданное физическое поле (для ресайза)
+
+    private Function<Point2D, Point2D> lastU = f -> new Point2D(0., 0.);
+    // Коеффициент, по которому определяется прозрачность
+    private double max_e = Double.MIN_VALUE;
+    public VectorField() {
         super();
         texture = new Image(getClass().getResourceAsStream("/res/miniArrow.png"));
     }
 
-    // f: x, y -> _a(x, y)
-    public void setField(Function<Point2D,Point2D> u){
-        vectors.forEach(e->{
-            // -, т.к. в физике ось oY вверх, в графике - вниз
-            Point2D vector_pos = new Point2D(e.getTranslateX()+texture.getWidth()/2
-                    ,+e.getTranslateY()+texture.getHeight()/2);
-            // -, т.к. fx вращает по часовой
-            e.setRotate(-vector_pos.angle( u.apply(vector_pos) ));
-        });
+    private double getAngleOfVector(Point2D p) {
+        return signum(p.getY()) * toDegrees(acos(p.dotProduct(1., 0) / (sqrt(p.getX() * p.getX() + p.getY() * p.getY()))));
     }
 
     @Override
-    public void setFieldByAngle(Function<Point2D, Double> f_angle) {
-        vectors.forEach(e->{
-            Point2D vector_pos = new Point2D(e.getTranslateX()+texture.getWidth()/2.
-                    ,+e.getTranslateY()+texture.getHeight()/2.);
-            e.setRotate(-f_angle.apply(vector_pos));
+    public void setFieldByPoint(Function<Point2D, Point2D> u) {
+        this.lastU = u;
+        vectors.forEach(v -> {
+            Point2D p = u.apply(new Point2D(v.getTranslateX(), v.getTranslateY()));
+            v.setRotate(getAngleOfVector(p));
+            v.setOpacity(p.magnitude() / (max_e));
 
         });
     }
 
     @Override
     public void resize(double width, double height) {
+        // +340 - для стрелочек под меню. По идее, величина,
+        // равная размеру меню
         super.resize(width, height);
-        this.resize();
-
+        this.resize_field(width + 340, height);
     }
 
-    private void resize(){
-        vectors.forEach(e->this.getChildren().remove(e));
-        vectors.clear();
-        double width  =  (float)this.getWidth ();
-        double height =  (float)this.getHeight();
+    public double getMax_e() {
+        return max_e;
+    }
 
-        double w_step = texture.getWidth()  + 12;
-        double h_step = texture.getHeight()+ 5;
+    public void setMax_e(double max_e) {
+        this.max_e = max_e;
+    }
+    // Добавление новых или удаление лишних стрелок при ресайзе
+    private void resize_field(double width, double height) {
+        vectors.forEach(e -> this.getChildren().remove(e));
+        vectors.clear();
+
+        double w_step = texture.getWidth() + 12;
+        double h_step = texture.getHeight() + 5;
 
         double i_h = 0.;
         double j_w = 0.;
 
-        while (i_h < height){
+        while (i_h < height) {
             j_w = 0.;
-            while(j_w < width){
+            while (j_w < width) {
                 ImageView vector = new ImageView(texture);
                 this.getChildren().add(vector);
                 vector.toBack();
                 vector.setTranslateX(j_w);
                 vector.setTranslateY(i_h);
+                Point2D p = lastU.apply(new Point2D(vector.getTranslateX(), vector.getTranslateY()));
+                vector.setRotate(getAngleOfVector(p));
+                vector.setOpacity(p.magnitude() / (max_e));
                 vectors.add(vector);
                 j_w += w_step;
             }

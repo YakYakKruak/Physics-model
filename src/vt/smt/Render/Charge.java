@@ -1,11 +1,17 @@
 package vt.smt.Render;
 
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
-
+/**
+ * Created by semitro on 03.11.17.
+ */
 public class Charge  extends Pane {
     private vt.smt.Physics.Charge e;
     private ImageView rendered;
@@ -17,14 +23,12 @@ public class Charge  extends Pane {
 
         rendered.setLayoutX(-rendered.getBoundsInLocal().getWidth()/2.);
         rendered.setLayoutY(-rendered.getBoundsInLocal().getHeight()/2.);
-
         this.setOnMouseDragged(event -> {
             rendered.setTranslateX(event.getX());
             rendered.setTranslateY(event.getY());
             e.setPosition(new Point2D(event.getX(),event.getY()));
 
-            if(whileDragging != null)
-                whileDragging.run();
+            whileDragging.run();
         });
 
 
@@ -37,15 +41,33 @@ public class Charge  extends Pane {
     }
 
     private void loadImage(boolean positive_charge){
-        if (positive_charge)
+        if (positive_charge) {
             rendered.setImage(new Image(getClass().getResourceAsStream("/res/plusE.png")));
-        else
-          rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
-   }
+            Platform.runLater(()-> {
+                InnerShadow sh = new InnerShadow(5, Color.RED);
+                sh.setInput(new DropShadow(100, Color.RED));
+                rendered.setEffect(sh);
+            });
+        }
+        else {
+            rendered.setImage(new Image(getClass().getResourceAsStream("/res/minusE.png")));
+            Platform.runLater(()->{
+                InnerShadow sh = new InnerShadow(5, Color.AQUA);
+                sh.setInput(new DropShadow(100, Color.BLUE));
+                rendered.setEffect(sh);
+            });
+        }
+
+
+    }
     public vt.smt.Physics.Charge getCharge() {
         return e;
     }
 
+    public void setPosition(Point2D position){
+        e.setPosition(position);
+        setCharge(e);
+    }
     public void setCharge(vt.smt.Physics.Charge e) {
         this.e = e;
         rendered.setTranslateX( e.getPosition().getX());
@@ -59,4 +81,3 @@ public class Charge  extends Pane {
     }
 
 }
-
