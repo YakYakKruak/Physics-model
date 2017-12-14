@@ -42,7 +42,7 @@ public class Controller {
     private TextField inputLenght;
 
     @FXML //  fx:id="fruitCombo"
-    private ComboBox<String> fruitCombo; // Value injected by FXMLLoader
+    private ComboBox<String> chargeCombo; // Value injected by FXMLLoader
 
     private Кондюк conduc;
 
@@ -50,12 +50,37 @@ public class Controller {
     private List<vt.smt.Render.Charge> charges = new LinkedList<>();
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
     private double plastCharge = 1E-9;
+
     // Коэффициент - 'максимальное значение напряжённости'
     private double fieldOpacityFactor = 8.85*10E-10;
     private Alert alert = new Alert(Alert.AlertType.ERROR);
+    private double k = 1E-9;
 
     public void initialize(){
-        conduc = new Кондюк(new Point2D(200,385),14,50,22,plastCharge);
+
+        conduc = new Кондюк(new Point2D(200,385),14,50,22,plastCharge*k);
+        chargeCombo.setOnAction((event) -> {
+            conduc.setCharge(conduc.getCharge()/k);
+            String s = chargeCombo.getSelectionModel().getSelectedItem();
+            switch (s) {
+                case "пКл": {
+                    k = 1E-12;
+                    chargeCombo.setPromptText("aaaaa");
+                }
+                    break;
+                case "нКл":
+                    k = 1E-9;
+                    break;
+                case "мкКл":
+                    k = 1E-6;
+                    break;
+                default:
+                    k = 1E-3;
+                    break;
+            }
+            conduc.setCharge(conduc.getCharge()*k);
+        });
+
         calculator.setКондюк(conduc);
         initContextMenu();
         field.setFieldByPoint(calculator.getField());
@@ -75,7 +100,7 @@ public class Controller {
 
         inputPower.setOnKeyReleased( event -> {
             try{
-                conduc.setCharge(Double.parseDouble(inputPower.getText())*plastCharge);
+                conduc.setCharge(Double.parseDouble(inputPower.getText())*k);
             } catch (NumberFormatException nfe) {}
             redrawPlasts();
         });
@@ -143,3 +168,4 @@ public class Controller {
     }
 
 }
+

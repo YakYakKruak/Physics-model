@@ -20,8 +20,9 @@
         <VBox alignment="CENTER"  styleClass="rightMenu">
             <Label style="-fx-text-fill: white; ">Заряд пластин:</Label>
             <HBox spacing="5">
-                <TextField styleClass="justInput" fx:id="inputPower" />
-                <ComboBox fx:id="fruitCombo" styleClass="justInput" >
+
+                <TextField  fx:id="inputPower" style=" -fx-text-fill: white; -fx-max-width: 80px; -fx-background-color: dodgerblue; -fx-border-color: white; -fx-border-radius: 2px"  />
+                <ComboBox  fx:id="chargeCombo" style="-fx-max-width: 100px; -fx-background-color: dodgerblue; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 2px" promptText="нКл">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="пКл" />
