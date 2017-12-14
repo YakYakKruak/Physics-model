@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
@@ -104,6 +103,7 @@ public class Controller {
         });
 
         redrawPlasts();
+
     }
 
     private void redrawPlasts(){

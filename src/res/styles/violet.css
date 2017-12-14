@@ -23,6 +23,7 @@
     -fx-effect: dropshadow(gaussian, #c57bff, 6, 1.0, 0, 0);
 }
 
+
 #chargeCombo {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -33,5 +34,15 @@
 #chargeCombo .cell {
     -fx-background-color: darkviolet;
     -fx-text-fill: white;
+}
 
+.charge{
+    -fx-scale-y: 1.0;
+    -fx-scale-x: 1.0;
+
+}
+.charge:hover{
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-blend-mode: hard-light;
 }
