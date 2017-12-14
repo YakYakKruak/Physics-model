@@ -22,3 +22,16 @@
     -fx-fill: darkviolet;
     -fx-effect: dropshadow(gaussian, #c57bff, 6, 1.0, 0, 0);
 }
+
+#chargeCombo {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 2px;
+}
+
+#chargeCombo .cell {
+    -fx-background-color: darkviolet;
+    -fx-text-fill: white;
+
+}

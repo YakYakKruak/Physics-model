@@ -1,6 +1,6 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.MenuItem?>
-<ContextMenu xmlns:fx="http://javafx.com/fxml">
+<ContextMenu>
     <items>
         <MenuItem text="Добавить положительный заряд" onAction="#addPositive"/>
         <MenuItem text="Добавить отрицательный заряд" onAction="#addNegative"/>

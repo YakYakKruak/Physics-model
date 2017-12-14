@@ -43,32 +43,28 @@ public class Controller {
     @FXML
     private TextField inputLenght;
 
-    @FXML //  fx:id="fruitCombo"
-    private ComboBox<String> chargeCombo; // Value injected by FXMLLoader
+    @FXML
+    private ComboBox<String> chargeCombo;
 
     private Кондюк conduc;
 
     private ContextMenu contextMenu = null;
     private List<vt.smt.Render.Charge> charges = new LinkedList<>();
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
-    private double plastCharge = 1E-9;
 
     // Коэффициент - 'максимальное значение напряжённости'
     private double fieldOpacityFactor = 8.85*10E-10;
-    private Alert alert = new Alert(Alert.AlertType.ERROR);
     private double k = 1E-9;
 
     public void initialize(){
-
-        conduc = new Кондюк(new Point2D(200,385),14,50,22,plastCharge*k);
+        double plastCharge = 1E-9;
+        conduc = new Кондюк(new Point2D(200,385),15,50,22, plastCharge *k);
         chargeCombo.setOnAction((event) -> {
             conduc.setCharge(conduc.getCharge()/k);
             String s = chargeCombo.getSelectionModel().getSelectedItem();
             switch (s) {
-                case "пКл": {
+                case "пКл":
                     k = 1E-12;
-                    chargeCombo.setPromptText("aaaaa");
-                }
                     break;
                 case "нКл":
                     k = 1E-9;
