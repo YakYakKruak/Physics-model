@@ -4,9 +4,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.shape.Rectangle;
 import vt.smt.Physics.Charge;
 import vt.smt.Physics.VectorFieldCalculator;
@@ -161,10 +163,9 @@ public class Controller {
             });
     }
 
-    public void onFieldClick(MouseEvent click){
+    public void onFieldClick(ContextMenuEvent click){
         lastClick = new Point2D(click.getSceneX(),click.getSceneY());
-        if(click.getButton().equals(MouseButton.SECONDARY))
-            contextMenu.show(field,click.getScreenX(),click.getScreenY());
+        contextMenu.show(field,click.getScreenX(),click.getScreenY());
     }
 
 }

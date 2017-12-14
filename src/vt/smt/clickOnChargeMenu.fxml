@@ -1,0 +1,21 @@
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import com.sun.javafx.scene.control.skin.DoubleField?>
+<ContextMenu xmlns:fx="http://javafx.com/fxml">
+    <items>
+        <CustomMenuItem hideOnClick="false">
+            <content>
+                <HBox>
+                    <TextField fx:id="menuChangeValue" onAction="#menuValueChanged"/>
+                    <Label text="Кл"/>
+                </HBox>
+            </content>
+        </CustomMenuItem>
+        <MenuItem text="(Удалить?)" >
+        </MenuItem>
+    </items>
+</ContextMenu>

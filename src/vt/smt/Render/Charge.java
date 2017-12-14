@@ -1,7 +1,11 @@
 package vt.smt.Render;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -9,12 +13,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
+
 /**
  * Created by semitro on 03.11.17.
  */
 public class Charge  extends Pane {
     private vt.smt.Physics.Charge e;
     private ImageView rendered;
+
+    private ContextMenu onClickMenu;
+    @FXML // Меняет величину заряда
+    private TextField   menuChangeValue;
 
     public Charge(){
         rendered = new ImageView();
@@ -31,13 +41,37 @@ public class Charge  extends Pane {
             whileDragging.run();
         });
 
-
     }
 
     public Charge(vt.smt.Physics.Charge charge){
         this();
         setCharge(charge);
         loadImage(charge.getCharge() >= 0);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(vt.smt.Main.class.getResource("clickOnChargeMenu.fxml"));
+            loader.setController(this);
+            onClickMenu = loader.load();
+            menuChangeValue.setText(Double.toString(e.getCharge()));
+            rendered.setOnContextMenuRequested((e)-> {
+                onClickMenu.show(rendered, rendered.getTranslateX(), rendered.getTranslateY());
+                e.consume();
+            });
+
+        } catch (IOException e1) {
+            System.err.println("Ошибка при загрузке Fxml для меню нажатия на заряд");
+            e1.printStackTrace();
+        }
+
+    }
+
+    public void menuValueChanged(){
+        try{
+            e.setCharge(Double.parseDouble(menuChangeValue.getText()));
+            loadImage(e.getCharge() >= 0);
+        }catch (NumberFormatException ex){
+            menuChangeValue.setText(Double.toString(e.getCharge()));
+        }
     }
 
     private void loadImage(boolean positive_charge){

@@ -11,7 +11,7 @@
     <top>
     </top>
     <center>
-        <VectorField onMouseClicked="#onFieldClick" fx:id="field">
+        <VectorField onContextMenuRequested="#onFieldClick" fx:id="field">
             <Rectangle styleClass="plast" fx:id="plast1"/>
             <Rectangle styleClass="plast" fx:id="plast2"/>
         </VectorField>

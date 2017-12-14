@@ -13,7 +13,6 @@ public class Main extends Application {
 
         Scene scene = FXMLLoader.load(getClass().getResource("main.fxml"));
         primaryStage.setTitle("Статическое электрическое поле");
-        primaryStage.setIconified(true);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icon64.png")));
 
         primaryStage.setFullScreen(true);
