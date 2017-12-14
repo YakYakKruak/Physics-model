@@ -26,7 +26,7 @@ public class Charge  extends Pane {
     @FXML // Меняет величину заряда
     private TextField   menuChangeValue;
 
-    public Charge(){
+    private Charge(){
         rendered = new ImageView();
         this.getChildren().add(rendered);
         setCharge(new vt.smt.Physics.Charge(1,new Point2D(0,0)));
@@ -47,7 +47,10 @@ public class Charge  extends Pane {
         this();
         setCharge(charge);
         loadImage(charge.getCharge() >= 0);
-
+        initMenu();
+        initBeauty();
+    }
+    private void initMenu(){
         try {
             FXMLLoader loader = new FXMLLoader(vt.smt.Main.class.getResource("clickOnChargeMenu.fxml"));
             loader.setController(this);
@@ -62,9 +65,21 @@ public class Charge  extends Pane {
             System.err.println("Ошибка при загрузке Fxml для меню нажатия на заряд");
             e1.printStackTrace();
         }
+    }
+    private void initBeauty(){
+        rendered.getStyleClass().add("charge");
+//        rendered.setOnMouseEntered(e->{
+//            ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200),rendered);
+//            scaleTransition.setFromX(1.0);
+//            scaleTransition.setFromY(1.0);
+//            scaleTransition.setToX(1.2);
+//            scaleTransition.setToY(1.2);
+//
+//            scaleTransition.play();
+//            scaleTransition.
+//        });
 
     }
-
     public void menuValueChanged(){
         try{
             e.setCharge(Double.parseDouble(menuChangeValue.getText()));

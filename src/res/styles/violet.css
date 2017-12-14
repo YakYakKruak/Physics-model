@@ -22,3 +22,15 @@
     -fx-fill: darkviolet;
     -fx-effect: dropshadow(gaussian, #c57bff, 6, 1.0, 0, 0);
 }
+
+.charge{
+    -fx-scale-y: 1.0;
+    -fx-scale-x: 1.0;
+
+}
+.charge:hover{
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-blend-mode: hard-light;
+
+}
