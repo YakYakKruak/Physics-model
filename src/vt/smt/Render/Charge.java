@@ -35,7 +35,6 @@ public class Charge  extends Parent {
         rendered.setLayoutX(-rendered.getBoundsInLocal().getWidth()/2.);
         rendered.setLayoutY(-rendered.getBoundsInLocal().getHeight()/2.);
         this.setOnMouseDragged(event -> {
-//            this.toBack();
             rendered.setTranslateX(event.getX());
             rendered.setTranslateY(event.getY());
             e.setPosition(new Point2D(event.getX(),event.getY()));
@@ -80,6 +79,11 @@ public class Charge  extends Parent {
         }catch (NumberFormatException ex){
             menuChangeValue.setText(Double.toString(e.getCharge()));
         }
+    }
+
+    public void delete() {
+        this.e.setCharge(0);
+        setPosition(new Point2D(-100,-100));
     }
 
     private void loadImage(boolean positive_charge){

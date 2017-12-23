@@ -52,12 +52,11 @@ public class Controller {
     private VectorFieldCalculator calculator = new VectorFieldCalculatorImpl();
 
     // Коэффициент - 'максимальное значение напряжённости'
-    private double fieldOpacityFactor = 8.85*10E-10;
+    private final double fieldOpacityFactor = 8.85*10E-10;
     private double k = 1E-9;
 
     public void initialize(){
-        double plastCharge = 1E-9;
-        conduc = new Кондюк(new Point2D(200,385),15,50,22, plastCharge *k);
+        conduc = new Кондюк(new Point2D(200,385),15,50,22, k);
         chargeCombo.setOnAction((event) -> {
             conduc.setCharge(conduc.getCharge()/k);
             String s = chargeCombo.getSelectionModel().getSelectedItem();
@@ -105,6 +104,8 @@ public class Controller {
         redrawPlasts();
 
     }
+
+
 
     private void redrawPlasts(){
         plast1.setTranslateX(conduc.getPlateCenter().getX() + 12);

@@ -15,7 +15,7 @@
                 </HBox>
             </content>
         </CustomMenuItem>
-        <MenuItem text="(Удалить?)" >
+        <MenuItem text="Удалить" onAction="#delete" >
         </MenuItem>
     </items>
 </ContextMenu>
